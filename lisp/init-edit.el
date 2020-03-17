@@ -283,7 +283,7 @@
   :diminish
   :if (executable-find "aspell")
   :hook (((text-mode outline-mode) . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)
+         ;; (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
                             (dolist (key '("C-;" "C-," "C-."))
                               (unbind-key key flyspell-mode-map)))))
@@ -332,7 +332,7 @@
   :init
   (setq undo-tree-visualizer-timestamps t
         undo-tree-enable-undo-in-region nil
-        undo-tree-auto-save-history nil)
+        undo-tree-auto-save-history t)
 
   ;; HACK: keep the diff window
   (with-no-warnings
