@@ -100,7 +100,7 @@ decrease this. If you experience stuttering, increase this.")
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 (defun update-load-path (&rest _)
   "Update `load-path'."
-  (dolist (dir '("site-lisp" "lisp"))
+  (dolist (dir '("nox" "site-lisp" "lisp"))
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (defun add-subdirs-to-load-path (&rest _)
