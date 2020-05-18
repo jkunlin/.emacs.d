@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: check file open
+# key: file
+# --
+if (!$1) {
+	std::cerr << "$1 open error" << std::endl;
+	return 1;
+}
+$0

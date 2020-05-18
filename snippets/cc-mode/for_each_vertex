@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: for each vertex
+# key: forv
+# --
+for (size_t v = 1; v < adjacency_list.size(); ++v) {
+	$0
+}

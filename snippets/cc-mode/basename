@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: basename
+# key: basename
+# --
+string basename(string name) {
+	size_t begin = name.find_last_of('/');
+	return name.substr(begin + 1, name.size() - begin);
+}

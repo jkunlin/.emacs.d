@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: get cpu time from runsolver
+# key: runsolver
+# --
+double get_time_from_runsolver(const string &str) {
+  string cpu_time_str = str.substr(0, str.find('/'));
+  return std::stod(cpu_time_str);
+}

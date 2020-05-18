@@ -1,0 +1,58 @@
+# -*- mode: snippet -*-
+# name: kcore decomposition
+# key: kcore
+# --
+vector<int> kcore_vertex;
+vector<size_t> index_in_kv;
+vector<int> core_num;
+void kcore_decomposition() {
+	kcore_vertex.clear(); kcore_vertex.reserve(adjacency_list.size() - 1);
+	core_num.resize(adjacency_list.size());
+	index_in_kv.resize(adjacency_list.size());
+
+	for (vector<vector<int>>::size_type v = 1; v < adjacency_list.size(); ++v) {
+		kcore_vertex.push_back(v);
+		core_num[v] = adjacency_list[v].size();
+	}
+
+	int max_degree = 0;
+	for (auto v : kcore_vertex) {
+		if (max_degree < core_num[v]) {
+			max_degree = core_num[v];
+		}
+	}
+	vector<size_t> bin_pos(max_degree + 1, 0);
+	for (auto v : kcore_vertex) {
+		bin_pos[core_num[v]]++;
+	}
+	//end position
+	for (size_t i = 1; i < bin_pos.size(); ++i) {
+		bin_pos[i] += bin_pos[i - 1];
+	}
+	//begin position
+	for (vector<int>::size_type v = 1; v <= kcore_vertex.size(); ++v) {
+		auto degree = core_num[v];
+		kcore_vertex[--bin_pos[degree]] = v;
+		//note: destroy consisdent
+		index_in_kv[v] = bin_pos[degree];
+	}
+
+	//core decomposition
+	for (vector<int>::size_type i = 0; i < kcore_vertex.size(); ++i) {
+		auto v = kcore_vertex[i];
+		//is it okay to break here?
+		if (core_num[v] == max_degree || bin_pos[core_num[v] + 1] == kcore_vertex.size()) {
+			break;
+		}
+		for (auto u : adjacency_list[v]) {
+			if (core_num[u] > core_num[v]) {
+				//exchange u and begin position
+				auto index_w = bin_pos[core_num[u]], index_u = index_in_kv[u];
+				auto w = kcore_vertex[index_w];
+				kcore_vertex[index_u] = w; kcore_vertex[index_w] = u;
+				index_in_kv[u] = index_w; index_in_kv[w] = index_u;
+				++bin_pos[core_num[u]]; --core_num[u];
+			}
+		}
+	}
+}

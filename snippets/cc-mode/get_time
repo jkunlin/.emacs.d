@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: get time
+# key: get_time
+# --
+#include <cmath>
+#include<sys/times.h>
+#include <unistd.h>
+tms start, finish;
+inline
+double get_time() {
+	times(&finish);
+	double res = double(finish.tms_utime - start.tms_utime + finish.tms_stime - start.tms_stime) / sysconf(_SC_CLK_TCK);
+	res = round(res * 100) / 100;
+	return res;
+}
